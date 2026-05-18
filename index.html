@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learning Priority One — Capability Engine Starter Kit</title>
+  <meta name="description" content="60 industrial formats to activate real capability on the shop floor. Free download of the Capability Engine Starter Kit by Learning Priority One.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ---------- TOKENS (aligned with book cover palette) ---------- */
+    :root {
+      /* Backgrounds — clean editorial white, as the book */
+      --bone: #FFFFFF;
+      --bone-light: #F4F7FA;
+      --bone-deep: #E8EFF5;
+
+      /* Ink — near-black with subtle navy tint */
+      --graphite: #16191B;
+      --graphite-soft: #2D3540;
+
+      /* Mid-tones — blue-grays from the cover */
+      --steel: #7CA4BE;
+      --steel-light: #B0C8DA;
+
+      /* Brand accents (replacing cor-ten with the book's blue family) */
+      --corten: #1376BA;         /* bright blue — the "Priority" word */
+      --corten-light: #4A9BD4;
+      --corten-glow: #C4E9F1;    /* pale ice blue — the engine ring */
+
+      /* Deep — the navy from the bottom panel and main titles */
+      --deep-ink: #1A385C;
+
+      /* Rules — navy-tinted */
+      --rule: rgba(26, 56, 92, 0.14);
+      --rule-strong: rgba(26, 56, 92, 0.30);
+
+      --f-display: "Fraunces", Georgia, serif;
+      --f-mono: "JetBrains Mono", ui-monospace, monospace;
+      --f-body: "Manrope", -apple-system, sans-serif;
+    }
+
+    /* ---------- RESET ---------- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--f-body);
+      background: var(--bone);
+      color: var(--graphite);
+      line-height: 1.55;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      background-image:
+        linear-gradient(to right, rgba(26, 56, 92, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(26, 56, 92, 0.05) 1px, transparent 1px);
+      background-size: 80px 80px;
+      background-position: 0 0;
+    }
+
+    /* ---------- LAYOUT ---------- */
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+    @media (max-width: 720px) { .container { padding: 0 20px; } }
+
+    /* ---------- TYPOGRAPHY ---------- */
+    .mono-label {
+      font-family: var(--f-mono);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--steel);
+    }
+    .mono-label .accent { color: var(--corten); }
+
+    h1, h2, h3 { font-family: var(--f-display); font-weight: 400; letter-spacing: -0.015em; }
+    h1 {
+      font-size: clamp(36px, 5.8vw, 76px);
+      line-height: 1.02;
+      font-variation-settings: "opsz" 144, "SOFT" 30;
+      font-weight: 350;
+    }
+    h2 {
+      font-size: clamp(28px, 3.5vw, 44px);
+      line-height: 1.05;
+      font-variation-settings: "opsz" 90;
+    }
+    h3 { font-size: 22px; line-height: 1.15; }
+    p { font-size: 16px; color: var(--graphite-soft); }
+    .lead {
+      font-size: clamp(17px, 1.5vw, 20px);
+      line-height: 1.45;
+      color: var(--graphite-soft);
+      max-width: 560px;
+    }
+
+    /* ---------- NAV ---------- */
+    nav.top {
+      padding: 22px 0;
+      border-bottom: 1px solid var(--rule);
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 50;
+    }
+    nav.top .row { display: flex; align-items: center; justify-content: space-between; }
+    .logo {
+      font-family: var(--f-mono);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--graphite);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo::before {
+      content: "";
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background: var(--corten);
+    }
+    nav.top .meta {
+      font-family: var(--f-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--steel);
+    }
+
+    /* ---------- HERO ---------- */
+    .hero { padding: 80px 0 100px; position: relative; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    @media (max-width: 980px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 56px; }
+      .hero { padding: 56px 0 72px; }
+    }
+
+    .hero-left .mono-label { margin-bottom: 28px; display: block; }
+    .hero h1 { margin-bottom: 32px; }
+    .hero h1 em {
+      font-style: italic;
+      font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
+      color: var(--corten);
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 24px;
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid var(--rule);
+      flex-wrap: wrap;
+    }
+    .meta-stat { display: flex; flex-direction: column; gap: 4px; }
+    .meta-stat .n {
+      font-family: var(--f-display);
+      font-size: 38px;
+      line-height: 1;
+      font-weight: 400;
+      color: var(--graphite);
+    }
+    .meta-stat .l {
+      font-family: var(--f-mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--steel);
+    }
+
+    /* ---------- FORM CARD ---------- */
+    .form-card {
+      background: var(--bone-light);
+      border: 1px solid var(--rule-strong);
+      padding: 36px;
+      position: relative;
+    }
+    .form-card::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      width: 36px;
+      height: 36px;
+      border-top: 2px solid var(--corten);
+      border-left: 2px solid var(--corten);
+    }
+    .form-card::after {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      right: -1px;
+      width: 36px;
+      height: 36px;
+      border-bottom: 2px solid var(--corten);
+      border-right: 2px solid var(--corten);
+    }
+    .form-card .mono-label { margin-bottom: 16px; display: block; }
+    .form-card h2 { margin-bottom: 8px; }
+    .form-card .sub {
+      font-size: 14px;
+      color: var(--steel);
+      margin-bottom: 28px;
+      line-height: 1.45;
+    }
+
+    .field { margin-bottom: 22px; }
+    .field label {
+      display: block;
+      font-family: var(--f-mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--graphite);
+      margin-bottom: 8px;
+    }
+    .field input {
+      width: 100%;
+      padding: 10px 0;
+      border: none;
+      border-bottom: 1px solid var(--rule-strong);
+      background: transparent;
+      font-family: var(--f-body);
+      font-size: 16px;
+      color: var(--graphite);
+      transition: border-color 0.2s ease;
+    }
+    .field input:focus { outline: none; border-bottom-color: var(--corten); }
+    .field input::placeholder { color: var(--steel-light); }
+
+    .stage-toggle {
+      margin: 28px 0 24px;
+      padding: 20px;
+      background: var(--bone);
+      border-left: 2px solid var(--corten);
+    }
+    .stage-toggle .mono-label {
+      display: block;
+      margin-bottom: 14px;
+      color: var(--graphite);
+    }
+    .stage-toggle .stage-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .stage-toggle label.check {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--f-mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--graphite-soft);
+      cursor: pointer;
+      padding: 6px 0;
+    }
+    .stage-toggle input[type="checkbox"] {
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border: 1px solid var(--rule-strong);
+      background: var(--bone-light);
+      cursor: pointer;
+      position: relative;
+    }
+    .stage-toggle input[type="checkbox"]:checked {
+      background: var(--corten);
+      border-color: var(--corten);
+    }
+    .stage-toggle input[type="checkbox"]:checked::after {
+      content: "";
+      position: absolute;
+      left: 3px;
+      top: 0px;
+      width: 5px;
+      height: 9px;
+      border: solid var(--bone-light);
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 18px 24px;
+      background: var(--graphite);
+      color: var(--bone-light);
+      border: none;
+      font-family: var(--f-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .btn-primary:hover { background: var(--corten); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-primary .arrow { font-family: var(--f-mono); transition: transform 0.2s ease; }
+    .btn-primary:hover .arrow { transform: translateX(4px); }
+
+    .form-disclaimer {
+      font-family: var(--f-mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: var(--steel);
+      margin-top: 16px;
+      line-height: 1.5;
+    }
+
+    /* ---------- SUCCESS STATE ---------- */
+    .success-panel { display: none; text-align: left; padding: 12px 0; }
+    .success-panel.active { display: block; }
+    .form-card.submitted .form-content { display: none; }
+    .success-panel .check-mark {
+      width: 48px;
+      height: 48px;
+      background: var(--corten);
+      color: var(--bone-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--f-mono);
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+    .success-panel h2 { margin-bottom: 12px; }
+    .success-panel p { margin-bottom: 28px; }
+    .download-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 24px;
+      background: var(--graphite);
+      color: var(--bone-light);
+      text-decoration: none;
+      font-family: var(--f-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transition: background 0.2s ease;
+    }
+    .download-link:hover { background: var(--corten); }
+
+    /* ---------- SECTIONS ---------- */
+    section.bordered { border-top: 1px solid var(--rule); padding: 100px 0; }
+    @media (max-width: 720px) { section.bordered { padding: 72px 0; } }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      margin-bottom: 56px;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .section-head .left { max-width: 660px; }
+    .section-head .left .mono-label { display: block; margin-bottom: 16px; }
+    .section-head h2 { margin-bottom: 16px; }
+    .section-head .lead { color: var(--graphite-soft); }
+
+    /* ---------- STARTER KIT GRID ---------- */
+    .kit-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid var(--rule);
+      background: var(--rule);
+      gap: 1px;
+    }
+    @media (max-width: 980px) { .kit-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 540px) { .kit-grid { grid-template-columns: 1fr; } }
+    .kit-col {
+      background: var(--bone);
+      padding: 32px 28px;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .kit-col .stage-num {
+      font-family: var(--f-mono);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      color: var(--corten);
+      margin-bottom: 12px;
+    }
+    .kit-col .stage-name {
+      font-family: var(--f-display);
+      font-size: 24px;
+      font-weight: 400;
+      margin-bottom: 6px;
+      color: var(--graphite);
+      line-height: 1.15;
+    }
+    .kit-col .stage-es {
+      font-family: var(--f-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--steel);
+      margin-bottom: 20px;
+    }
+    .kit-col .doc-desc {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--graphite-soft);
+      margin-bottom: 24px;
+    }
+    .kit-col .doc-meta {
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid var(--rule);
+      font-family: var(--f-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--steel);
+    }
+
+    /* ---------- BUNDLE CARDS ---------- */
+    .bundles {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 720px) { .bundles { grid-template-columns: 1fr; } }
+
+    .bundle-card {
+      background: var(--bone-light);
+      border: 1px solid var(--rule-strong);
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+      cursor: pointer;
+    }
+    .bundle-card:hover { border-color: var(--corten); transform: translateY(-2px); }
+    .bundle-card .head {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 24px;
+    }
+    .bundle-card .num {
+      font-family: var(--f-display);
+      font-size: 56px;
+      line-height: 0.9;
+      color: var(--corten);
+      font-weight: 300;
+    }
+    .bundle-card .count {
+      font-family: var(--f-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      color: var(--steel);
+      text-transform: uppercase;
+      text-align: right;
+      padding-top: 8px;
+    }
+    .bundle-card h3 { font-size: 26px; margin-bottom: 6px; }
+    .bundle-card .stage-es {
+      font-family: var(--f-mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--steel);
+      margin-bottom: 20px;
+    }
+    .bundle-card p { font-size: 15px; line-height: 1.55; margin-bottom: 28px; flex: 1; }
+    .bundle-cta {
+      font-family: var(--f-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--graphite);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding-top: 16px;
+      border-top: 1px solid var(--rule);
+      align-self: start;
+      transition: color 0.2s ease;
+    }
+    .bundle-card:hover .bundle-cta { color: var(--corten); }
+    .bundle-cta .arrow { transition: transform 0.2s ease; }
+    .bundle-card:hover .bundle-cta .arrow { transform: translateX(4px); }
+
+    /* ---------- METHODOLOGY ---------- */
+    .method { background: var(--deep-ink); color: var(--bone); padding: 100px 0; margin: 0; }
+    @media (max-width: 720px) { .method { padding: 72px 0; } }
+    .method .mono-label { color: var(--corten-glow); }
+    .method h2 { color: var(--bone); margin-bottom: 24px; }
+    .method .lead { color: var(--steel-light); margin-bottom: 56px; max-width: 720px; }
+    .method .lead em { font-style: italic; color: var(--corten-glow); font-family: var(--f-display); }
+    .method h2 em {
+      font-style: italic;
+      color: var(--corten-glow);
+      font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
+    }
+
+    .pipeline {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      position: relative;
+    }
+    @media (max-width: 720px) { .pipeline { grid-template-columns: 1fr; gap: 16px; } }
+
+    .pipe-step { padding: 24px 20px; border: 1px solid rgba(255, 255, 255, 0.15); position: relative; }
+    .pipe-step .pn {
+      font-family: var(--f-mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      color: var(--corten-glow);
+      margin-bottom: 12px;
+    }
+    .pipe-step .pname {
+      font-family: var(--f-display);
+      font-size: 20px;
+      color: var(--bone);
+      margin-bottom: 4px;
+    }
+    .pipe-step .pes {
+      font-family: var(--f-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--steel);
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer { padding: 56px 0 40px; border-top: 1px solid var(--rule); }
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      flex-wrap: wrap;
+      gap: 32px;
+    }
+    .footer-left .logo { margin-bottom: 12px; }
+    .footer-left p {
+      font-family: var(--f-mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--steel);
+      line-height: 1.6;
+    }
+    .footer-right {
+      font-family: var(--f-mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--steel);
+      text-align: right;
+    }
+
+    /* ---------- ANIMATIONS ---------- */
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .reveal { opacity: 0; animation: fade-up 0.8s ease forwards; }
+    .reveal:nth-child(1) { animation-delay: 0.1s; }
+    .reveal:nth-child(2) { animation-delay: 0.25s; }
+    .reveal:nth-child(3) { animation-delay: 0.4s; }
+    .reveal:nth-child(4) { animation-delay: 0.55s; }
+  </style>
+</head>
+<body>
+
+  <nav class="top">
+    <div class="container row">
+      <a href="#" class="logo">LP1 · Learning Priority One</a>
+      <div class="meta">Houston, TX · 2026</div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-left">
+        <span class="mono-label reveal"><span class="accent">●</span> 60 formats · 5 stages · 1 methodology</span>
+        <h1 class="reveal">The numbers look great.<br>But the <em>knowledge</em> is not there.</h1>
+        <p class="lead reveal">Learning Priority One is the operating system for activating real capability on the shop floor. The STAGE framework and the Capability Engine methodology turn strategy into actionable tools — not classroom hours.</p>
+
+        <div class="hero-meta reveal">
+          <div class="meta-stat">
+            <span class="n">60</span>
+            <span class="l">Formats</span>
+          </div>
+          <div class="meta-stat">
+            <span class="n">5</span>
+            <span class="l">Stages</span>
+          </div>
+          <div class="meta-stat">
+            <span class="n">20+</span>
+            <span class="l">Years on the floor</span>
+          </div>
+          <div class="meta-stat">
+            <span class="n">Industry</span>
+            <span class="l">Manufacturing · O&amp;G · LNG</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="form-card" id="lead-form">
+          <div class="form-content">
+            <span class="mono-label">● Free download</span>
+            <h2>Capability Engine Starter Kit</h2>
+            <p class="sub">Four field-tested tools to diagnose, plan, and defend L&amp;D as a strategic engine. Your entry point into the Capability Engine.</p>
+
+            <form id="lead" action="https://formspree.io/f/REPLACE_WITH_YOUR_FORM_ID" method="POST">
+              <div class="field">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required placeholder="Your full name">
+              </div>
+              <div class="field">
+                <label for="email">Work email</label>
+                <input type="email" id="email" name="email" required placeholder="you@company.com">
+              </div>
+              <div class="field">
+                <label for="company">Company</label>
+                <input type="text" id="company" name="company" required placeholder="Your organization">
+              </div>
+
+              <div class="stage-toggle">
+                <span class="mono-label">Interested in a stage-specific bundle?</span>
+                <div class="stage-options">
+                  <label class="check"><input type="checkbox" name="bundle_interest" value="Diagnose"> Diagnose</label>
+                  <label class="check"><input type="checkbox" name="bundle_interest" value="Structure"> Structure</label>
+                  <label class="check"><input type="checkbox" name="bundle_interest" value="Activate"> Activate</label>
+                  <label class="check"><input type="checkbox" name="bundle_interest" value="Measure"> Measure</label>
+                  <label class="check"><input type="checkbox" name="bundle_interest" value="Evolve"> Evolve</label>
+                </div>
+              </div>
+
+              <input type="hidden" name="_subject" value="New LP1 Lead — Starter Kit">
+
+              <button type="submit" class="btn-primary" id="submit-btn">
+                <span>Download Starter Kit</span>
+                <span class="arrow">→</span>
+              </button>
+
+              <p class="form-disclaimer">By submitting, you agree to receive communications from LP1. No spam, no data resale. Unsubscribe anytime.</p>
+            </form>
+          </div>
+
+          <div class="success-panel" id="success">
+            <div class="check-mark">✓</div>
+            <h2>Done. It's yours.</h2>
+            <p>We've sent the Capability Engine Starter Kit to your inbox. In the meantime, download it directly here:</p>
+            <a href="REPLACE_WITH_DOWNLOAD_URL" class="download-link" target="_blank" rel="noopener">
+              <span>Download ZIP</span>
+              <span class="arrow">↓</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STARTER KIT GRID -->
+  <section class="bordered">
+    <div class="container">
+      <div class="section-head">
+        <div class="left">
+          <span class="mono-label"><span class="accent">01</span> / What's inside</span>
+          <h2>Four foundational tools. Built for L&amp;D leaders.</h2>
+          <p class="lead">Field-tested PDFs designed to give you traction on day one — an orientation guide, a curated reading path, a budget-defense toolkit, and an L&amp;D self-diagnostic. Use them to find your starting point inside the Capability Engine.</p>
+        </div>
+      </div>
+
+      <div class="kit-grid">
+        <div class="kit-col">
+          <span class="stage-num">DOC 00</span>
+          <span class="stage-name">Start Here</span>
+          <span class="stage-es">Orientation guide</span>
+          <p class="doc-desc">How to use the Capability Engine, what the Starter Kit contains, and where to dive in first.</p>
+          <div class="doc-meta">PDF · Read first</div>
+        </div>
+
+        <div class="kit-col">
+          <span class="stage-num">DOC 01</span>
+          <span class="stage-name">Reading Path</span>
+          <span class="stage-es">Curated route</span>
+          <p class="doc-desc">A curated reading order through the book — designed to take you from concept to action in a single weekend.</p>
+          <div class="doc-meta">PDF · Companion to the book</div>
+        </div>
+
+        <div class="kit-col">
+          <span class="stage-num">DOC 02</span>
+          <span class="stage-name">Budget Defense</span>
+          <span class="stage-es">Finance toolkit</span>
+          <p class="doc-desc">Practical toolkit to defend the L&amp;D budget before Finance. Frames learning as a capability investment, not a cost.</p>
+          <div class="doc-meta">PDF · Talking points + framing</div>
+        </div>
+
+        <div class="kit-col">
+          <span class="stage-num">DOC 03</span>
+          <span class="stage-name">L&amp;D Diagnostic</span>
+          <span class="stage-es">Self-assessment</span>
+          <p class="doc-desc">Identify where your L&amp;D function stands today — and which Capability Engine stage to focus on next.</p>
+          <div class="doc-meta">PDF · Stage-mapping tool</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUNDLES BY STAGE -->
+  <section class="bordered">
+    <div class="container">
+      <div class="section-head">
+        <div class="left">
+          <span class="mono-label"><span class="accent">02</span> / Bundles by stage</span>
+          <h2>Need to go deeper into a specific stage?</h2>
+          <p class="lead">Each stage of the Capability Engine has its own complete bundle of 12 formats. Request the one that matches where your operation stands today.</p>
+        </div>
+      </div>
+
+      <div class="bundles">
+        <div class="bundle-card" data-stage="Diagnose">
+          <div class="head">
+            <span class="num">01</span>
+            <span class="count">12 formats</span>
+          </div>
+          <h3>Diagnose</h3>
+          <span class="stage-es">Capability assessment</span>
+          <p>Map capability gaps and align stakeholders before spending a dollar on training. Audits, competency maps, sponsor analysis, baseline diagnostics.</p>
+          <a href="#lead-form" class="bundle-cta">Request bundle <span class="arrow">→</span></a>
+        </div>
+
+        <div class="bundle-card" data-stage="Structure">
+          <div class="head">
+            <span class="num">02</span>
+            <span class="count">12 formats</span>
+          </div>
+          <h3>Structure</h3>
+          <span class="stage-es">System design</span>
+          <p>Design actionable learning architectures: role–skill matrices, development paths, role-based competency models, curriculum blueprints.</p>
+          <a href="#lead-form" class="bundle-cta">Request bundle <span class="arrow">→</span></a>
+        </div>
+
+        <div class="bundle-card" data-stage="Activate">
+          <div class="head">
+            <span class="num">03</span>
+            <span class="count">12 formats</span>
+          </div>
+          <h3>Activate</h3>
+          <span class="stage-es">Shop-floor deployment</span>
+          <p>Turn the plan into real motion on the floor. Coaching cadences, on-the-job training, shift rituals, supervisor toolkits.</p>
+          <a href="#lead-form" class="bundle-cta">Request bundle <span class="arrow">→</span></a>
+        </div>
+
+        <div class="bundle-card" data-stage="Measure">
+          <div class="head">
+            <span class="num">04</span>
+            <span class="count">12 formats</span>
+          </div>
+          <h3>Measure</h3>
+          <span class="stage-es">KPIs &amp; indicators</span>
+          <p>Track what actually moves the needle. Leading and lagging indicators, capability dashboards, ROI models built for industrial L&amp;D.</p>
+          <a href="#lead-form" class="bundle-cta">Request bundle <span class="arrow">→</span></a>
+        </div>
+
+        <div class="bundle-card" data-stage="Evolve">
+          <div class="head">
+            <span class="num">05</span>
+            <span class="count">12 formats</span>
+          </div>
+          <h3>Evolve</h3>
+          <span class="stage-es">Continuous improvement</span>
+          <p>Close the loop. Maturity models, quarterly reviews, continuous improvement mechanics, tools to scale the system across plants.</p>
+          <a href="#lead-form" class="bundle-cta">Request bundle <span class="arrow">→</span></a>
+        </div>
+
+        <div class="bundle-card" data-stage="All">
+          <div class="head">
+            <span class="num">60</span>
+            <span class="count">Full catalog</span>
+          </div>
+          <h3>Full Library</h3>
+          <span class="stage-es">Commercial access</span>
+          <p>Want all 60 formats, editable templates, and implementation support? Let's talk. Available under commercial license or as part of the LP1 Copilot.</p>
+          <a href="mailto:contact@learningpriorityone.com" class="bundle-cta">Contact LP1 <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METHODOLOGY -->
+  <section class="method">
+    <div class="container">
+      <div class="section-head">
+        <div class="left">
+          <span class="mono-label"><span class="accent">03</span> / The methodology</span>
+          <h2>The Capability Engine is an <em>engine</em>. Not a course.</h2>
+          <p class="lead">Five connected stages. Each one with its own tools, deliverables, and indicators. <em>Diagnose</em> feeds <em>Structure</em>. <em>Structure</em> enables <em>Activate</em>. <em>Measure</em> and <em>Evolve</em> close the system. Industrial. Repeatable. Auditable.</p>
+        </div>
+      </div>
+
+      <div class="pipeline">
+        <div class="pipe-step">
+          <div class="pn">01</div>
+          <div class="pname">Diagnose</div>
+          <div class="pes">Gap assessment</div>
+        </div>
+        <div class="pipe-step">
+          <div class="pn">02</div>
+          <div class="pname">Structure</div>
+          <div class="pes">System design</div>
+        </div>
+        <div class="pipe-step">
+          <div class="pn">03</div>
+          <div class="pname">Activate</div>
+          <div class="pes">Deployment</div>
+        </div>
+        <div class="pipe-step">
+          <div class="pn">04</div>
+          <div class="pname">Measure</div>
+          <div class="pes">KPIs &amp; indicators</div>
+        </div>
+        <div class="pipe-step">
+          <div class="pn">05</div>
+          <div class="pname">Evolve</div>
+          <div class="pes">Continuous improvement</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-row">
+      <div class="footer-left">
+        <a href="#" class="logo">LP1 · Learning Priority One</a>
+        <p>Capability engineering for industrial operations.<br>Houston, TX · learningpriorityone.com</p>
+      </div>
+      <div class="footer-right">
+        © 2026 Learning Priority One LLC<br>
+        All rights reserved
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ---- Bundle card → pre-fills the matching checkbox ----
+    document.querySelectorAll('.bundle-card[data-stage]').forEach(card => {
+      card.addEventListener('click', (e) => {
+        const stage = card.dataset.stage;
+        // Don't intercept the "Full Library" card (it links to mailto)
+        if (stage === 'All') return;
+
+        e.preventDefault();
+        const checkbox = document.querySelector(`input[name="bundle_interest"][value="${stage}"]`);
+        if (checkbox) checkbox.checked = true;
+
+        // Smooth scroll to the form
+        document.getElementById('lead-form').scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        // Brief visual highlight of the checked option
+        const label = checkbox.closest('label');
+        if (label) {
+          label.style.transition = 'color 0.3s ease';
+          label.style.color = 'var(--corten)';
+          setTimeout(() => { label.style.color = ''; }, 1500);
+        }
+      });
+    });
+
+    // ---- AJAX form submission to Formspree ----
+    const form = document.getElementById('lead');
+    const card = document.getElementById('lead-form');
+    const successPanel = document.getElementById('success');
+    const submitBtn = document.getElementById('submit-btn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.querySelector('span:first-child').textContent = 'Sending...';
+
+      try {
+        const formData = new FormData(form);
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          card.classList.add('submitted');
+          successPanel.classList.add('active');
+        } else {
+          throw new Error('Submission failed');
+        }
+      } catch (err) {
+        submitBtn.disabled = false;
+        submitBtn.querySelector('span:first-child').textContent = 'Try again';
+        alert('There was a problem submitting the form. Please try again or email us directly at contact@learningpriorityone.com');
+      }
+    });
+  </script>
+
+</body>
+</html>
