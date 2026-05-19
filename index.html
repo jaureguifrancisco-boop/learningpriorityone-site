@@ -3,9 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Learning Priority One — Capability Engine Starter Kit</title>
-  <meta name="description" content="60 industrial formats to activate real capability on the shop floor. Free download of the Capability Engine Starter Kit by Learning Priority One.">
+  <title>Learning Priority One — The Capability Engine</title>
 
+  <!-- ===== SEO ===== -->
+  <meta name="description" content="The L&D Leader's Field Guide to Strategic Impact. Download the free Capability Engine Starter Kit — 4 field-tested tools built across 20+ years of heavy industrial L&D.">
+  <meta name="author" content="Francisco Jauregui">
+  <meta name="keywords" content="L&D, Learning and Development, capability building, industrial training, Capability Engine, STAGE framework, Oil and Gas L&D, manufacturing training, shop floor learning">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://learningpriorityone.com/">
+
+  <!-- ===== OPEN GRAPH (LinkedIn, Facebook, WhatsApp, iMessage) ===== -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Learning Priority One">
+  <meta property="og:title" content="Learning Priority One — The Capability Engine">
+  <meta property="og:description" content="The numbers look great. But the knowledge is not there. Download the free Capability Engine Starter Kit — 4 field-tested tools for L&D leaders.">
+  <meta property="og:url" content="https://learningpriorityone.com/">
+  <meta property="og:image" content="https://learningpriorityone.com/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Learning Priority One — The numbers look great. But the knowledge is not there.">
+  <meta property="og:locale" content="en_US">
+
+  <!-- ===== TWITTER / X CARD ===== -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Learning Priority One — The Capability Engine">
+  <meta name="twitter:description" content="The numbers look great. But the knowledge is not there. Free Capability Engine Starter Kit — 4 field-tested tools for L&D leaders.">
+  <meta name="twitter:image" content="https://learningpriorityone.com/og-image.png">
+  <meta name="twitter:image:alt" content="Learning Priority One — The numbers look great. But the knowledge is not there.">
+
+  <!-- ===== FAVICON ===== -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%231A385C'/%3E%3Crect x='30' y='30' width='40' height='40' fill='%231376BA'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -505,6 +532,115 @@
     .bundle-cta .arrow { transition: transform 0.2s ease; }
     .bundle-card:hover .bundle-cta .arrow { transform: translateX(4px); }
 
+    /* ---------- BOOK SECTION ---------- */
+    .book-section {
+      background: var(--bone-light);
+      border-top: 1px solid var(--rule);
+      padding: 100px 0;
+    }
+    @media (max-width: 720px) { .book-section { padding: 72px 0; } }
+
+    .book-grid {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 80px;
+      align-items: center;
+    }
+    @media (max-width: 880px) {
+      .book-grid { grid-template-columns: 1fr; gap: 48px; }
+    }
+
+    .book-cover-wrap {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .book-cover-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 12px -12px -12px 12px;
+      background: var(--deep-ink);
+      opacity: 0.08;
+      z-index: 0;
+    }
+    .book-cover {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 360px;
+      height: auto;
+      display: block;
+      box-shadow:
+        0 1px 2px rgba(26, 56, 92, 0.08),
+        0 8px 24px rgba(26, 56, 92, 0.18),
+        0 24px 48px rgba(26, 56, 92, 0.12);
+    }
+
+    .book-content .mono-label { display: block; margin-bottom: 20px; }
+    .book-content .mono-label .accent { color: var(--corten); }
+    .book-content h2 {
+      margin-bottom: 8px;
+      font-size: clamp(32px, 3.4vw, 44px);
+    }
+    .book-content .book-subtitle {
+      font-family: var(--f-display);
+      font-style: italic;
+      font-size: clamp(18px, 1.6vw, 22px);
+      color: var(--steel);
+      margin-bottom: 28px;
+      line-height: 1.4;
+    }
+    .book-content .book-desc {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--graphite-soft);
+      margin-bottom: 16px;
+      max-width: 520px;
+    }
+    .book-content .book-author {
+      font-family: var(--f-mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--graphite);
+      margin: 24px 0 32px;
+      padding-top: 20px;
+      border-top: 1px solid var(--rule);
+      max-width: 520px;
+    }
+    .book-cta-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .book-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 28px;
+      background: var(--graphite);
+      color: var(--bone-light);
+      text-decoration: none;
+      font-family: var(--f-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transition: background 0.2s ease;
+    }
+    .book-btn:hover { background: var(--corten); }
+    .book-btn .arrow { transition: transform 0.2s ease; }
+    .book-btn:hover .arrow { transform: translateX(4px); }
+    .book-format-meta {
+      font-family: var(--f-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--steel);
+    }
+
     /* ---------- METHODOLOGY ---------- */
     .method { background: var(--deep-ink); color: var(--bone); padding: 100px 0; margin: 0; }
     @media (max-width: 720px) { .method { padding: 72px 0; } }
@@ -629,7 +765,7 @@
             <h2>Capability Engine Starter Kit</h2>
             <p class="sub">Four field-tested tools to diagnose, plan, and defend L&amp;D as a strategic engine. Your entry point into the Capability Engine.</p>
 
-            <form id="lead" action="https://formspree.io/f/xaqvrowr" method="POST">
+            <form id="lead" action="https://formspree.io/f/REPLACE_WITH_YOUR_FORM_ID" method="POST">
               <div class="field">
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" required placeholder="Your full name">
@@ -669,7 +805,7 @@
             <div class="check-mark">✓</div>
             <h2>Done. It's yours.</h2>
             <p>We've sent the Capability Engine Starter Kit to your inbox. In the meantime, download it directly here:</p>
-            <a href="/downloads/LP1-Starter-Kit-v1.zip" class="download-link" target="_blank" rel="noopener">
+            <a href="REPLACE_WITH_DOWNLOAD_URL" class="download-link" target="_blank" rel="noopener">
               <span>Download ZIP</span>
               <span class="arrow">↓</span>
             </a>
@@ -802,6 +938,37 @@
           <span class="stage-es">Commercial access</span>
           <p>Want all 60 formats, editable templates, and implementation support? Let's talk. Available under commercial license or as part of the LP1 Copilot.</p>
           <a href="mailto:contact@learningpriorityone.com" class="bundle-cta">Contact LP1 <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE BOOK -->
+  <section class="book-section">
+    <div class="container">
+      <div class="book-grid">
+        <div class="book-cover-wrap">
+          <img src="/book-cover.jpg" alt="Learning Priority One — The Capability Engine, by Francisco Jauregui" class="book-cover">
+        </div>
+
+        <div class="book-content">
+          <span class="mono-label"><span class="accent">●</span> Now available · The book</span>
+          <h2>Learning Priority One</h2>
+          <p class="book-subtitle">The Capability Engine — The L&amp;D Leader's Field Guide to Strategic Impact.</p>
+
+          <p class="book-desc">Training was delivered. The reports looked good. And still, somewhere between the classroom and the floor, the knowledge disappeared — and the business kept paying the price.</p>
+
+          <p class="book-desc">Built on twenty years of industrial practice across Oil &amp; Gas and heavy manufacturing, this book gives L&amp;D leaders a system to move beyond activity and engineer capability the business can actually see.</p>
+
+          <div class="book-author">By Francisco Jauregui · Foreword by industry leaders</div>
+
+          <div class="book-cta-row">
+            <a href="https://www.amazon.com/dp/B0H1NT2DD7" class="book-btn" target="_blank" rel="noopener">
+              <span>Get the book</span>
+              <span class="arrow">→</span>
+            </a>
+            <span class="book-format-meta">Paperback &amp; Kindle · Amazon</span>
+          </div>
         </div>
       </div>
     </div>
